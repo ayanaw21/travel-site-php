@@ -302,7 +302,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_profile'])) {
                         <i class="fas fa-circle"></i> <?php echo ucfirst($booking['booking_status']); ?>
                     </p>
 
-                    <a href="booking.php?id=<?php echo $booking['id']; ?>" class="btn-small">View Details</a>
                 </div>
             </div>
             <?php endforeach; ?>

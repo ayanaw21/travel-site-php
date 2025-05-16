@@ -13,7 +13,6 @@ require_once 'includes/auth_functions.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Travel Habesha - Explore Ethiopia's Wonders</title>
     <link rel="stylesheet" href="index.css">
-    <link rel="stylesheet" href="styles/header.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Poppins:wght@500;600;700&family=Sono:wght@400;500&display=swap"
@@ -27,56 +26,60 @@ require_once 'includes/auth_functions.php';
         <!-- Top Bar -->
         <div class="top-bar">
             <div class="container">
-                <!-- Social icons and language dropdown -->
                 <div class="header-utilities">
-                    <div class="language-selector">
-                        <i class="fas fa-globe"></i>
-                        <select aria-label="Language selector">
-                            <option value="en">English</option>
-                            <option value="am">አማርኛ</option>
-                        </select>
-                    </div>
+                    <!-- Left-aligned items -->
+                    <div class="top-bar-left">
+                        <div class="language-selector">
+                            <i class="fas fa-globe"></i>
+                            <select aria-label="Language selector">
+                                <option value="en">English</option>
+                                <option value="am">አማርኛ</option>
+                            </select>
+                        </div>
 
-                    <div class="social-links">
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
-                    </div>
+                        <div class="social-links">
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+                        </div>
 
-                    <div class="quick-links">
-                        <a href="tel:+251911811899" class="phone-link">
-                            <i class="fas fa-phone-alt"></i> +251 911 811 899
-                        </a>
-                        <a href="contact.php" class="contact-link">
-                            <i class="fas fa-map-marker-alt"></i> Contact Us
-                        </a>
-                    </div>
-
-                    <!-- User Account Section moved to top bar -->
-                    <div class="user-account-section">
-                        <?php if (isLoggedIn()): ?>
-                        <div class="user-menu-dropdown">
-                            <a href="profile.php" class="user-avatar">
-                                <img src="<?php echo getUserAvatar($_SESSION['user_id']); ?>" alt="User Profile">
-                                <span><?php echo htmlspecialchars($_SESSION['username']); ?></span>
-                                <i class="fas fa-chevron-down"></i>
+                        <div class="quick-links">
+                            <a href="tel:+251911811899" class="phone-link">
+                                <i class="fas fa-phone-alt"></i> +251 911 811 899
                             </a>
-                            <ul class="user-dropdown-menu">
-                                <li><a href="profile.php"><i class="fas fa-user-circle"></i> My Profile</a></li>
-                                <li><a href="my-bookings.php"><i class="fas fa-calendar-alt"></i> My Bookings</a></li>
-                                <?php if (isAdmin()): ?>
-                                <li><a href="admin.php"><i class="fas fa-cog"></i> Admin Panel</a></li>
-                                <?php endif; ?>
-                                <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                            </ul>
+                            <a href="contact.php" class="contact-link">
+                                <i class="fas fa-map-marker-alt"></i> Contact Us
+                            </a>
                         </div>
-                        <?php else: ?>
-                        <div class="auth-links">
-                            <a href="login.php" class="login-link"><i class="fas fa-sign-in-alt"></i> Login</a>
-                            <a href="register.php" class="register-link"><i class="fas fa-user-plus"></i> Register</a>
+                    </div>
+
+                    <!-- Right-aligned user section -->
+                    <div class="top-bar-right">
+                        <div class="user-account-section">
+                            <?php if (isLoggedIn()): ?>
+                            <div class="user-menu-dropdown">
+                                <a href="profile.php" class="user-avatar">
+                                    <img src="<?php echo getUserAvatar($_SESSION['user_id']); ?>" alt="User Profile">
+                                    <span><?php echo htmlspecialchars($_SESSION['username']); ?></span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </a>
+                                <ul class="user-dropdown-menu">
+                                    <li><a href="profile.php"><i class="fas fa-user-circle"></i> My Profile</a></li>
+                                    <?php if (isAdmin()): ?>
+                                    <li><a href="admin.php"><i class="fas fa-cog"></i> Admin Panel</a></li>
+                                    <?php endif; ?>
+                                    <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                                </ul>
+                            </div>
+                            <?php else: ?>
+                            <div class="auth-links">
+                                <a href="login.php" class="login-link"><i class="fas fa-sign-in-alt"></i> Login</a>
+                                <a href="register.php" class="register-link"><i class="fas fa-user-plus"></i>
+                                    Register</a>
+                            </div>
+                            <?php endif; ?>
                         </div>
-                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -128,8 +131,8 @@ require_once 'includes/auth_functions.php';
     </header>
 
     <script>
-    // Mobile Menu Toggle
     document.addEventListener('DOMContentLoaded', function() {
+        // Mobile Menu Toggle
         const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
         const navMenu = document.querySelector('.nav-menu');
 
@@ -160,16 +163,6 @@ require_once 'includes/auth_functions.php';
             });
         });
 
-        // Handle window resize
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 992) {
-                const dropdownMenus = document.querySelectorAll('.dropdown-menu');
-                dropdownMenus.forEach(menu => {
-                    menu.style.display = '';
-                });
-            }
-        });
-
         // User dropdown in top bar
         const userDropdownToggle = document.querySelector('.user-menu-dropdown > .user-avatar');
         if (userDropdownToggle) {
@@ -189,5 +182,15 @@ require_once 'includes/auth_functions.php';
                 }
             });
         }
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 992) {
+                const dropdownMenus = document.querySelectorAll('.dropdown-menu');
+                dropdownMenus.forEach(menu => {
+                    menu.style.display = '';
+                });
+            }
+        });
     });
     </script>
