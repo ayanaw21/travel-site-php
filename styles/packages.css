@@ -1,0 +1,288 @@
+/* ===== Base Styles ===== */
+:root {
+  --primary: #e74c3c;
+  --primary-dark: #c0392b;
+  --secondary: #2c3e50;
+  --secondary-dark: #1a252f;
+  --accent: #f39c12;
+  --light: #f9f9f9;
+  --gray: #666;
+  --light-gray: #eee;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: var(--light);
+  margin: 0;
+}
+.hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                url('/images/package-hero.jpg') center/cover no-repeat;
+    color: white;
+    padding: 100px 20px;
+    text-align: center;
+}
+
+.hero-all {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.hero-padding {
+    padding-bottom: 40px;
+}
+
+#our {
+    font-family: 'Sono', monospace;
+    color: #E9C46A;
+    letter-spacing: 2px;
+    font-size: 1.1rem;
+}
+
+.hero h2 {
+    font-size: 3rem;
+    margin: 15px 0;
+    font-weight: 700;
+}
+
+.search-form {
+    background: white;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #264653;
+}
+
+.form-group select, .form-group input[type="range"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.price-v {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price-value {
+    font-weight: bold;
+    color: #2A9D8F;
+}
+
+.price-range {
+    margin-top: 10px;
+}
+
+.btn-primary {
+    background-color: #2A9D8F;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 28px;
+}
+
+.btn-primary:hover {
+    background-color: #228176;
+    transform: translateY(-2px);
+}
+
+
+.cards {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 20px;
+}
+
+.card-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #264653;
+}
+
+.i-city {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 15px;
+    color: #2A9D8F;
+}
+
+.cult {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.cult h6 {
+    display: inline-block;
+    background: #f0f0f0;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    margin-right: 5px;
+    color: #555;
+}
+
+.cult h2 {
+    color: #2A9D8F;
+    font-size: 1.8rem;
+}
+
+.card p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.detail {
+    background: transparent;
+    border: 2px solid #2A9D8F;
+    color: #2A9D8F;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.detail:hover {
+    background: #2A9D8F;
+    color: white;
+}
+
+.detail a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+.no-results {
+    text-align: center;
+    grid-column: 1 / -1;
+    padding: 50px 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.no-results i {
+    font-size: 3rem;
+    color: #E9C46A;
+    margin-bottom: 20px;
+}
+
+.no-results p {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.btn-reset {
+    background: #264653;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-reset:hover {
+    background: #1d3641;
+}
+
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 60px 20px;
+    }
+    
+    .hero h2 {
+        font-size: 2rem;
+    }
+    
+    .search-form {
+        grid-template-columns: 1fr;
+    }
+    
+    .cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .card {
+        max-width: 100%;
+    }
+}
+
+
+/* Add to your CSS */
+.animate__animated {
+    animation-duration: 0.5s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.animate__fadeIn {
+    animation-name: fadeIn;
+}
+
+.card {
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+    animation-delay: calc(var(--order) * 0.1s);
+}
