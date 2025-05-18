@@ -15,6 +15,10 @@ $stmt = $pdo->prepare("SELECT * FROM destinations WHERE id = ?");
 $stmt->execute([$destination_id]);
 $destination = $stmt->fetch();
 
+$stmt = $pdo->prepare("SELECT * FROM destination_images WHERE destination_id = ?");
+$stmt->execute([$destination_id]);
+$destination_images = $stmt->fetchAll();
+
 if (!$destination) {
     header("Location: packages.php");
     exit();
@@ -48,7 +52,9 @@ require_once __DIR__ . '/includes/header.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $destination['name']; ?> - Travel Habesha</title>
+    <link rel="stylesheet" href="/styles/destination.css">
     <link rel="stylesheet" href="index.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&family=Sono&display=swap"
         rel="stylesheet">
@@ -98,12 +104,22 @@ require_once __DIR__ . '/includes/header.php';
 
             <div class="destination-gallery">
                 <h2>Gallery</h2>
+                <?php if (!empty($destination_images)): ?>
                 <div class="gallery-grid">
-                    <div class="gallery-item" style="background-image: url('assets/destination1.jpg');"></div>
-                    <div class="gallery-item" style="background-image: url('assets/destination2.jpg');"></div>
-                    <div class="gallery-item" style="background-image: url('assets/destination3.jpg');"></div>
-                    <div class="gallery-item" style="background-image: url('assets/destination4.jpg');"></div>
+                    <?php foreach ($destination_images as $image): ?>
+                    <div class="gallery-item">
+                        <img src="<?php echo htmlspecialchars($image['image_path']); ?>"
+                            alt="<?php echo !empty($image['caption']) ? htmlspecialchars($image['caption']) : 'Destination image'; ?>"
+                            class="gallery-image">
+                        <?php if (!empty($image['caption'])): ?>
+                        <div class="gallery-caption"><?php echo htmlspecialchars($image['caption']); ?></div>
+                        <?php endif; ?>
+                    </div>
+                    <?php endforeach; ?>
                 </div>
+                <?php else: ?>
+                <p>No images available for this destination yet.</p>
+                <?php endif; ?>
             </div>
         </div>
     </section>

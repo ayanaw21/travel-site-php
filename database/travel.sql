@@ -1,7 +1,7 @@
 -- 1. Drop existing tables (if needed)
 DROP TABLE IF EXISTS packages;
 DROP TABLE IF EXISTS destinations;
-DROP TABLE IF EXISTS hotels;
+DROP TABLE IF EXISTS destination_images;
 
 
 -- 2. Recreate tables
@@ -133,3 +133,38 @@ INSERT INTO contact_messages (name, email, message, status) VALUES
 ('Michael Johnson', 'michael@example.com', 'I would like to inquire about the best time to visit Lalibela.', 'replied'),
 ('Sarah Williams', 'sarah@example.com', 'Do you offer custom tour packages for large groups?', 'read'),
 ('David Smith', 'david@example.com', 'I need information about visa requirements for Ethiopia.', 'unread');
+
+
+
+CREATE TABLE IF NOT EXISTS destination_images (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        destination_id INTEGER NOT NULL,
+        image_path TEXT NOT NULL,
+        caption TEXT,
+        is_featured INTEGER DEFAULT 0,
+        FOREIGN KEY (destination_id) REFERENCES destinations(id)
+    )
+
+    select * from destination_images
+
+-- For destination with ID 1 (example: Addis Ababa)
+INSERT INTO destination_images (destination_id, image_path, caption, is_featured) 
+VALUES 
+(1, 'assets/destinations/addis1.jpg', 'Skyline of Addis Ababa', 1),
+(1, 'assets/destinations/addis2.jpg', 'National Museum of Ethiopia', 0),
+(1, 'assets/destinations/addis3.jpg', 'Entoto Mountain View', 0),
+(1, 'assets/destinations/addis4.jpg', 'Mercato Market', 0);
+
+-- For destination with ID 2 (example: Lalibela)
+INSERT INTO destination_images (destination_id, image_path, caption, is_featured) 
+VALUES 
+(1, 'https://media.istockphoto.com/id/1974540313/photo/the-famous-rock-hewn-church-of-saint-george-in-lalibela-ethiopia.webp?a=1&b=1&s=612x612&w=0&k=20&c=edM1bzxZHp4pRb6nX7dRAvZAKJ08B7qGm77J2tR2HAs=', 'Rock-Hewn Churches', 1),
+(1, 'https://images.unsplash.com/photo-1646647689051-ed33eecf1c21?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGxhbGliZWxhfGVufDB8fDB8fHww', 'Church of St. George', 0),
+(2, 'https://media.istockphoto.com/id/2172173230/photo/rock-hewn-monolithic-ortodox-church-of-biete-amanuel-lalibela-amhara-region-ethiopia.jpg?s=1024x1024&w=is&k=20&c=7vu_L0PkBfgDfj441gM1LlaqLsz71ULV4l73Fi5lAgY=', 'Religious Ceremony', 0);
+
+-- For destination with ID 3 (example: Danakil Depression)
+INSERT INTO destination_images (destination_id, image_path, caption, is_featured) 
+VALUES 
+(3, 'assets/destinations/danakil1.jpg', 'Erta Ale Volcano', 1),
+(3, 'assets/destinations/danakil2.jpg', 'Dallol Sulfur Springs', 0),
+(3, 'assets/destinations/danakil3.jpg', 'Salt Flats', 0);
