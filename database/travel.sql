@@ -1,5 +1,8 @@
 -- 1. Drop existing tables (if needed)
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS packages;
+DROP TABLE IF EXISTS destinations;
+DROP TABLE IF EXISTS hotels;
+
 
 -- 2. Recreate tables
 CREATE TABLE IF NOT EXISTS users (
@@ -92,22 +95,24 @@ INSERT INTO users (username, email, password, full_name, phone, is_admin) VALUES
 ('mike_jones', 'mike@example.com', '$2y$10$Jz5XoN9Wq1UeYV7kQrZQ.eLbGv8wWj2fX1VlD3sMn5JxKtY0hH7dS', 'Mike Jones', '+251933445566', 1);
 
 INSERT INTO destinations (name, description, location, image_path) VALUES
-('Lalibela', 'Famous for its rock-hewn churches dating back to the 12th century, a UNESCO World Heritage Site.', 'Amhara Region', 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Lalibela_Cross.jpg/800px-Lalibela_Cross.jpg'),
-('Simien Mountains', 'Spectacular mountain range with unique wildlife including the Gelada baboon and Ethiopian wolf.', 'Northern Ethiopia', 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Simien_Mountains_%2815%29.jpg/800px-Simien_Mountains_%2815%29.jpg'),
-('Danakil Depression', 'One of the hottest places on earth with colorful sulfur springs and salt flats.', 'Afar Region', 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Dallol_-_panoramio.jpg/800px-Dallol_-_panoramio.jpg'),
-('Axum', 'Ancient city with obelisks marking tombs and the legendary Ark of the Covenant.', 'Tigray Region', 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Stelae_field_aksum.jpg/800px-Stelae_field_aksum.jpg'),
-('Gondar', 'Known as the "Camelot of Africa" with its medieval castles and churches.', 'Amhara Region', 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Fasil_Ghebbi.jpg/800px-Fasil_Ghebbi.jpg');
+('Lalibela', 'Famous for its rock-hewn churches dating back to the 12th century, a UNESCO World Heritage Site.', 'Amhara Region', 'assets/lalibela.jpg'),
+('Simien Mountains', 'Spectacular mountain range with unique wildlife including the Gelada baboon and Ethiopian wolf.', 'Northern Ethiopia', 'assets/a1.jpg'),
+('Danakil Depression', 'One of the hottest places on earth with colorful sulfur springs and salt flats.', 'Afar Region', 'assets/a3.jpg'),
+('Axum', 'Ancient city with obelisks marking tombs and the legendary Ark of the Covenant.', 'Tigray Region', 'assets/axum.jpg'),
+('Gondar', 'Known as the "Camelot of Africa" with its medieval castles and churches.', 'Amhara Region', 'https://media.istockphoto.com/id/618832938/photo/fasilidas-palace-in-fasil-ghebbi-site-gonder.webp?a=1&b=1&s=612x612&w=0&k=20&c=e5a51z8VPqHgFR4N4mNn3fgBCPF_URn75m9yMNEG6Fs=');
+select * from packages
+
 
 INSERT INTO packages (destination_id, title, description, duration_days, price, image_path, type, difficulty, min_age) VALUES
-(1, 'Lalibela Pilgrimage Tour', 'Explore the 11 medieval monolithic cave churches of Lalibela.', 3, 450.00, 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Bete_Giyorgis_Lalibela_ETH_1978.jpg/800px-Bete_Giyorgis_Lalibela_ETH_1978.jpg', 'cultural', 'easy', 12),
-(2, 'Simien Mountains Trek', '3-day trek through the "Roof of Africa" with stunning views.', 4, 650.00, 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Simien_Mountains_%2815%29.jpg/800px-Simien_Mountains_%2815%29.jpg', 'adventure', 'moderate', 16),
-(3, 'Danakil Depression Expedition', 'Journey to one of the most inhospitable but beautiful places on Earth.', 2, 550.00, 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Dallol_-_panoramio.jpg/800px-Dallol_-_panoramio.jpg', 'adventure', 'difficult', 18),
-(4, 'Historical Axum Tour', 'Discover the ancient kingdom of Axum and its archaeological wonders.', 2, 350.00, 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Stelae_field_aksum.jpg/800px-Stelae_field_aksum.jpg', 'cultural', 'easy', 10),
-(5, 'Gondar Castles Tour', 'Visit the 17th century castles of Emperor Fasilides and his successors.', 2, 400.00, 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Fasil_Ghebbi.jpg/800px-Fasil_Ghebbi.jpg', 'cultural', 'easy', 10);
+(1, 'Lalibela Pilgrimage Tour', 'Explore the 11 medieval monolithic cave churches of Lalibela.', 3, 450.00, 'https://media.istockphoto.com/id/2156554163/photo/rock-hewn-monolithic-ortodox-church-of-bete-maryam-under-the-cover-shield-lalibela-amhara.webp?a=1&b=1&s=612x612&w=0&k=20&c=NPXN2jM96sVP6B7mrIsCQL1zqR9Y4Ilmm8PW4O72sH8=', 'cultural', 'easy', 12),
+(2, 'Simien Mountains Trek', '3-day trek through the "Roof of Africa" with stunning views.', 4, 650.00, 'assets/Simien-Mountains-Ethiopia.jpg', 'adventure', 'moderate', 16),
+(3, 'Danakil Depression Expedition', 'Journey to one of the most inhospitable but beautiful places on Earth.', 2, 550.00, 'https://media.istockphoto.com/id/108311399/photo/inside-the-explosion-crater-of-dallol-volcano-danakil-depression-ethiopia.webp?a=1&b=1&s=612x612&w=0&k=20&c=7qOZ2-ljVyRmiPlvYhJebaqESd-DZuxKwR0h0qTz63M=', 'adventure', 'difficult', 18),
+(4, 'Historical Axum Tour', 'Discover the ancient kingdom of Axum and its archaeological wonders.', 2, 350.00, 'https://media.istockphoto.com/id/186914973/photo/obelisk-in-the-aksum-kingdom-ethiopia.webp?a=1&b=1&s=612x612&w=0&k=20&c=cNH4mhbn4sIrWgV0SIf-NVjfQGCF1wn0HI0YuchvuyE=', 'cultural', 'easy', 10),
+(5, 'Gondar Castles Tour', 'Visit the 17th century castles of Emperor Fasilides and his successors.', 2, 400.00, 'assets/fasiledes.jpg', 'cultural', 'easy', 10);
 
 INSERT INTO hotels (name, location, description, price_per_night, rating, image_path, amenities) VALUES
-('Lalibela Lodge', 'Lalibela', 'Eco-friendly lodge with stunning views of the mountains and churches.', 120.00, 4, 'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80', 'wifi,restaurant,pool'),
-('Simien Lodge', 'Simien Mountains', 'Africa''s highest hotel at 3260m altitude with breathtaking views.', 150.00, 5, 'https://images.unsplash.com/photo-1582719471387-6d7658a973a3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80', 'wifi,restaurant,bar,heating'),
+('Lalibela Lodge', 'Lalibela', 'Eco-friendly lodge with stunning views of the mountains and churches.', 120.00, 4, 'assets/hlalibela1.jpg', 'wifi,restaurant,pool'),
+('Simien Lodge', 'Simien Mountains', 'Africa''s highest hotel at 3260m altitude with breathtaking views.', 150.00, 5, 'assets/hgonder1.jpg', 'wifi,restaurant,bar,heating'),
 ('Gheralta Lodge', 'Tigray', 'Luxury lodge with panoramic views of the Gheralta mountains.', 180.00, 5, 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80', 'wifi,spa,restaurant,pool'),
 ('Kuriftu Resort', 'Bishoftu', 'Lakeside resort with excellent facilities near Addis Ababa.', 200.00, 5, 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80', 'wifi,spa,restaurant,pool,gym'),
 ('Haile Resort', 'Arba Minch', 'Beautiful resort overlooking Lake Abaya and Lake Chamo.', 160.00, 4, 'https://images.unsplash.com/photo-1568084680786-a84f91d1153c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80', 'wifi,restaurant,pool');

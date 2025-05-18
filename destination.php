@@ -2,7 +2,6 @@
 require_once __DIR__ . '/includes/auth_functions.php';
 startSecureSession();
 require_once __DIR__ . '/connect.php';
-require_once __DIR__ . '/includes/header.php';
 
 if (!isset($_GET['id'])) {
     header("Location: packages.php");
@@ -23,22 +22,23 @@ if (!$destination) {
 
 // Get packages for this destination
 $stmt = $pdo->prepare("
-    SELECT * FROM packages 
-    WHERE destination_id = ?
-    ORDER BY price ASC
+SELECT * FROM packages 
+WHERE destination_id = ?
+ORDER BY price ASC
 ");
 $stmt->execute([$destination_id]);
 $packages = $stmt->fetchAll();
 
 // Get hotels in this destination
 $stmt = $pdo->prepare("
-    SELECT * FROM hotels 
-    WHERE location LIKE ?
-    ORDER BY rating DESC
-    LIMIT 3
+SELECT * FROM hotels 
+WHERE location LIKE ?
+ORDER BY rating DESC
+LIMIT 3
 ");
 $stmt->execute(['%' . $destination['location'] . '%']);
 $hotels = $stmt->fetchAll();
+require_once __DIR__ . '/includes/header.php';
 ?>
 
 <!DOCTYPE html>
