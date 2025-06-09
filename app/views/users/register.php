@@ -3,7 +3,7 @@
 <div class="auth-section">
     <div class="auth-container">
         <h2>Create an Account</h2>
-        <form action="<?php echo URLROOT; ?>/users/register" method="post">
+        <form action="<?php echo URLROOT; ?>/users/register" method="post" class="register-form">
             <div class="form-group">
                 <label for="first_name">First Name: <sup>*</sup></label>
                 <input type="text" name="first_name" id="first_name" 
@@ -29,8 +29,7 @@
                 <label for="password">Password: <sup>*</sup></label>
                 <div class="password-wrapper">
                     <input type="password" name="password" id="password" 
-                           class="<?php echo (!empty($data['password_err'])) ? 'is-invalid' : ''; ?>"
-                           value="<?php echo $data['password']; ?>">
+                           class="<?php echo (!empty($data['password_err'])) ? 'is-invalid' : ''; ?>">
                     <span class="password-toggle" onclick="togglePassword('password')">
                         <i class="fas fa-eye"></i>
                     </span>
@@ -41,8 +40,7 @@
                 <label for="confirm_password">Confirm Password: <sup>*</sup></label>
                 <div class="password-wrapper">
                     <input type="password" name="confirm_password" id="confirm_password" 
-                           class="<?php echo (!empty($data['confirm_password_err'])) ? 'is-invalid' : ''; ?>"
-                           value="<?php echo $data['confirm_password']; ?>">
+                           class="<?php echo (!empty($data['confirm_password_err'])) ? 'is-invalid' : ''; ?>">
                     <span class="password-toggle" onclick="togglePassword('confirm_password')">
                         <i class="fas fa-eye"></i>
                     </span>
@@ -88,6 +86,23 @@ function togglePassword(inputId) {
         toggleIcon.classList.add('fa-eye');
     }
 }
+
+// Add form submission handling
+document.querySelector('.register-form').addEventListener('submit', function(e) {
+    const first_name = document.getElementById('first_name').value;
+    const last_name = document.getElementById('last_name').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const confirm_password = document.getElementById('confirm_password').value;
+    
+    if (!first_name || !last_name || !email || !password || !confirm_password) {
+        e.preventDefault();
+        alert('Please fill in all required fields');
+    } else if (password !== confirm_password) {
+        e.preventDefault();
+        alert('Passwords do not match');
+    }
+});
 </script>
 
 <?php require APPROOT . '/views/inc/footer.php'; ?> 

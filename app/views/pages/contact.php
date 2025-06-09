@@ -54,6 +54,7 @@ if (isLoggedIn()) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -61,9 +62,10 @@ if (isLoggedIn()) {
     <link rel="stylesheet" href="<?php echo URLROOT; ?>/styles/base.css">
     <link rel="stylesheet" href="<?php echo URLROOT; ?>/styles/header.css">
     <link rel="stylesheet" href="<?php echo URLROOT; ?>/styles/footer.css">
-    <link rel="stylesheet" href="<?php echo URLROOT; ?>/styles/pages/contact.css">
+    <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/pages/contact.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
+
 <body>
     <?php require_once APPROOT . '/views/inc/header.php'; ?>
 
@@ -146,4 +148,5 @@ if (isLoggedIn()) {
 
     <?php require_once APPROOT . '/views/inc/footer.php'; ?>
 </body>
-</html> 
+
+</html>

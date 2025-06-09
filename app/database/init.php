@@ -14,9 +14,15 @@ try {
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Drop existing tables if they exist
-    $db->exec("DROP TABLE IF EXISTS users");
+    $db->exec("DROP TABLE IF EXISTS bookings");
+    $db->exec("DROP TABLE IF EXISTS cars");
+    $db->exec("DROP TABLE IF EXISTS hotels");
     $db->exec("DROP TABLE IF EXISTS packages");
     $db->exec("DROP TABLE IF EXISTS destinations");
+    $db->exec("DROP TABLE IF EXISTS users");
+    $db->exec("DROP TABLE IF EXISTS destination_gallery");
+    $db->exec("DROP TABLE IF EXISTS attractions");
+    $db->exec("DROP TABLE IF EXISTS destination_reviews");
 
     // Read and execute SQL file
     $sql = file_get_contents(__DIR__ . '/init.sql');

@@ -1,10 +1,6 @@
 <?php
-class Hotel {
-    private $db;
-
-    public function __construct() {
-        $this->db = new Database;
-    }
+class Hotel extends Model {
+    protected $table = 'hotels';
 
     public function getAllHotels() {
         $this->db->query('SELECT * FROM hotels ORDER BY created_at DESC');
@@ -23,7 +19,8 @@ class Hotel {
     }
 
     public function getHotelsByType($type) {
-        $this->db->query('SELECT * FROM hotels WHERE type = :type ORDER BY created_at DESC');
+        $sql = "SELECT * FROM hotels WHERE type = :type";
+        $this->db->query($sql);
         $this->db->bind(':type', $type);
         return $this->db->resultSet();
     }
@@ -69,23 +66,17 @@ class Hotel {
     }
 
     public function getFeaturedHotels($limit = 6) {
-        $sql = "SELECT h.*, d.name as destination_name 
-                FROM hotels h
-                JOIN destinations d ON h.destination_id = d.id
-                WHERE h.featured = 1
-                ORDER BY RAND() LIMIT :limit";
+        $sql = "SELECT * FROM hotels ORDER BY RAND() LIMIT :limit";
         $this->db->query($sql);
         $this->db->bind(':limit', $limit);
         return $this->db->resultSet();
     }
 
     public function getHotelsByDestination($destination_id) {
-        $sql = "SELECT h.*, d.name as destination_name 
-                FROM hotels h
-                JOIN destinations d ON h.destination_id = d.id
-                WHERE h.destination_id = :destination_id";
+        // Since we don't have destination_id, we'll return all hotels for now
+        // This can be modified later to filter by location or other criteria
+        $sql = "SELECT * FROM hotels";
         $this->db->query($sql);
-        $this->db->bind(':destination_id', $destination_id);
         return $this->db->resultSet();
     }
 
@@ -100,12 +91,9 @@ class Hotel {
     }
 
     public function searchHotels($query) {
-        $sql = "SELECT h.*, d.name as destination_name 
-                FROM hotels h
-                JOIN destinations d ON h.destination_id = d.id
-                WHERE h.name LIKE :query 
-                OR h.description LIKE :query 
-                OR d.name LIKE :query";
+        $sql = "SELECT * FROM hotels 
+                WHERE name LIKE :query 
+                OR description LIKE :query";
         $this->db->query($sql);
         $this->db->bind(':query', '%' . $query . '%');
         return $this->db->resultSet();

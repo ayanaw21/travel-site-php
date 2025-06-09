@@ -16,11 +16,7 @@ class Destination extends Model {
     }
 
     public function getDestinationWithDetails($id) {
-        $sql = "SELECT d.*, 
-                (SELECT COUNT(*) FROM packages WHERE destination_id = d.id) as package_count,
-                (SELECT COUNT(*) FROM hotels WHERE destination_id = d.id) as hotel_count
-                FROM destinations d
-                WHERE d.id = :id";
+        $sql = "SELECT * FROM destinations WHERE id = :id";
         $this->db->query($sql);
         $this->db->bind(':id', $id);
         return $this->db->single();
@@ -37,7 +33,7 @@ class Destination extends Model {
 
     public function getDestinationsByRegion($region) {
         $sql = "SELECT * FROM destinations 
-                WHERE region = :region";
+                WHERE location = :region";
         $this->db->query($sql);
         $this->db->bind(':region', $region);
         return $this->db->resultSet();
@@ -45,7 +41,7 @@ class Destination extends Model {
 
     public function getDestinationsByType($type) {
         $sql = "SELECT * FROM destinations 
-                WHERE type = :type";
+                WHERE category = :type";
         $this->db->query($sql);
         $this->db->bind(':type', $type);
         return $this->db->resultSet();

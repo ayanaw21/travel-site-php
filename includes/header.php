@@ -96,10 +96,14 @@ require_once __DIR__ . '/../connect.php';
                         <li class="nav-item dropdown">
                             <a href="packages.php" class="nav-link">Packages <i class="fas fa-chevron-down"></i></a>
                             <ul class="dropdown-menu">
-                                <li><a href="packages.php?type=adventure"><i class="fas fa-mountain"></i> Adventure Tours</a></li>
-                                <li><a href="packages.php?type=cultural"><i class="fas fa-landmark"></i> Cultural Tours</a></li>
-                                <li><a href="packages.php?type=wildlife"><i class="fas fa-paw"></i> Wildlife Safaris</a></li>
-                                <li><a href="packages.php?type=religious"><i class="fas fa-pray"></i> Religious Tours</a></li>
+                                <li><a href="packages.php?type=adventure"><i class="fas fa-mountain"></i> Adventure
+                                        Tours</a></li>
+                                <li><a href="packages.php?type=cultural"><i class="fas fa-landmark"></i> Cultural
+                                        Tours</a></li>
+                                <li><a href="packages.php?type=wildlife"><i class="fas fa-paw"></i> Wildlife Safaris</a>
+                                </li>
+                                <li><a href="packages.php?type=religious"><i class="fas fa-pray"></i> Religious
+                                        Tours</a></li>
                             </ul>
                         </li>
                         <li class="nav-item"><a href="hotels.php" class="nav-link">Hotels</a></li>

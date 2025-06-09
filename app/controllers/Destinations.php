@@ -36,10 +36,9 @@ class Destinations extends Controller {
             redirect('destinations');
         }
 
-        // Get destination packages
+        // Get all packages and hotels for now
+        // Later we can filter them based on location or other criteria
         $packages = $this->packageModel->getPackagesByDestination($id);
-
-        // Get destination hotels
         $hotels = $this->hotelModel->getHotelsByDestination($id);
 
         // Get destination gallery

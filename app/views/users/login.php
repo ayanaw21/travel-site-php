@@ -4,7 +4,8 @@
     <div class="auth-container">
         <h2>Login to Your Account</h2>
         <?php flash('register_success'); ?>
-        <form action="<?php echo URLROOT; ?>/users/login" method="post">
+        <?php flash('login_success'); ?>
+        <form action="<?php echo URLROOT; ?>/users/login" method="post" class="login-form">
             <div class="form-group">
                 <label for="email">Email: <sup>*</sup></label>
                 <input type="email" name="email" id="email" 
@@ -16,8 +17,7 @@
                 <label for="password">Password: <sup>*</sup></label>
                 <div class="password-wrapper">
                     <input type="password" name="password" id="password" 
-                           class="<?php echo (!empty($data['password_err'])) ? 'is-invalid' : ''; ?>"
-                           value="<?php echo $data['password']; ?>">
+                           class="<?php echo (!empty($data['password_err'])) ? 'is-invalid' : ''; ?>">
                     <span class="password-toggle" onclick="togglePassword()">
                         <i class="fas fa-eye"></i>
                     </span>
@@ -34,13 +34,13 @@
         <div class="social-login">
             <p>Or login with</p>
             <div class="social-buttons">
-                <button class="social-btn google">
+                <button type="button" class="social-btn google">
                     <i class="fab fa-google"></i> Google
                 </button>
-                <button class="social-btn facebook">
+                <button type="button" class="social-btn facebook">
                     <i class="fab fa-facebook-f"></i> Facebook
                 </button>
-                <button class="social-btn twitter">
+                <button type="button" class="social-btn twitter">
                     <i class="fab fa-twitter"></i> Twitter
                 </button>
             </div>
@@ -63,6 +63,17 @@ function togglePassword() {
         toggleIcon.classList.add('fa-eye');
     }
 }
+
+// Add form submission handling
+document.querySelector('.login-form').addEventListener('submit', function(e) {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    
+    if (!email || !password) {
+        e.preventDefault();
+        alert('Please fill in all required fields');
+    }
+});
 </script>
 
 <?php require APPROOT . '/views/inc/footer.php'; ?> 

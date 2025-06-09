@@ -4,27 +4,31 @@ class User extends Model {
 
     // Register user
     public function register($data) {
-        // Remove confirm_password from data
-        unset($data['confirm_password']);
-        unset($data['first_name_err']);
-        unset($data['last_name_err']);
-        unset($data['email_err']);
-        unset($data['password_err']);
-        unset($data['confirm_password_err']);
-        
-        // Hash password
-        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-        
-        // Create user
-        if($this->create($data)) {
-            return true;
+        try {
+            $this->db->query('INSERT INTO users (first_name, last_name, email, password) VALUES (:first_name, :last_name, :email, :password)');
+            
+            // Bind values
+            $this->db->bind(':first_name', $data['first_name']);
+            $this->db->bind(':last_name', $data['last_name']);
+            $this->db->bind(':email', $data['email']);
+            $this->db->bind(':password', $data['password']);
+
+            // Execute
+            return $this->db->execute();
+        } catch (PDOException $e) {
+            if ($e->getCode() == 23000) { // Integrity constraint violation
+                return false;
+            }
+            throw $e;
         }
-        return false;
     }
 
     // Login user
     public function login($email, $password) {
-        $user = $this->findOneBy('email', $email);
+        $this->db->query('SELECT * FROM users WHERE email = :email');
+        $this->db->bind(':email', $email);
+        
+        $user = $this->db->single();
 
         if($user) {
             if(password_verify($password, $user->password)) {
@@ -36,7 +40,17 @@ class User extends Model {
 
     // Find user by email
     public function findByEmail($email) {
-        return $this->findOneBy('email', $email);
+        $this->db->query('SELECT * FROM users WHERE email = :email');
+        $this->db->bind(':email', $email);
+        
+        $row = $this->db->single();
+        
+        // Check row
+        if($this->db->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // Update user profile

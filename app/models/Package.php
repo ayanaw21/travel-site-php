@@ -1,10 +1,6 @@
 <?php
-class Package {
-    private $db;
-
-    public function __construct() {
-        $this->db = new Database;
-    }
+class Package extends Model {
+    protected $table = 'packages';
 
     public function getAllPackages() {
         $this->db->query('SELECT * FROM packages ORDER BY created_at DESC');
@@ -23,7 +19,8 @@ class Package {
     }
 
     public function getPackagesByType($type) {
-        $this->db->query('SELECT * FROM packages WHERE type = :type ORDER BY created_at DESC');
+        $sql = "SELECT * FROM packages WHERE type = :type";
+        $this->db->query($sql);
         $this->db->bind(':type', $type);
         return $this->db->resultSet();
     }
@@ -63,11 +60,8 @@ class Package {
         return $this->db->rowCount() == 0;
     }
 
-    public function getFeaturedPackages($limit = 4) {
-        $sql = "SELECT p.*, d.name as destination_name 
-                FROM packages p
-                JOIN destinations d ON p.destination_id = d.id
-                ORDER BY RAND() LIMIT :limit";
+    public function getFeaturedPackages($limit = 6) {
+        $sql = "SELECT * FROM packages ORDER BY RAND() LIMIT :limit";
         $this->db->query($sql);
         $this->db->bind(':limit', $limit);
         return $this->db->resultSet();
@@ -85,12 +79,10 @@ class Package {
     }
 
     public function getPackagesByDestination($destination_id) {
-        $sql = "SELECT p.*, d.name as destination_name 
-                FROM packages p
-                JOIN destinations d ON p.destination_id = d.id
-                WHERE p.destination_id = :destination_id";
+        // Since we don't have destination_id, we'll return all packages for now
+        // This can be modified later to filter by location or other criteria
+        $sql = "SELECT * FROM packages";
         $this->db->query($sql);
-        $this->db->bind(':destination_id', $destination_id);
         return $this->db->resultSet();
     }
 
@@ -105,12 +97,9 @@ class Package {
     }
 
     public function searchPackages($query) {
-        $sql = "SELECT p.*, d.name as destination_name 
-                FROM packages p
-                JOIN destinations d ON p.destination_id = d.id
-                WHERE p.title LIKE :query 
-                OR p.description LIKE :query 
-                OR d.name LIKE :query";
+        $sql = "SELECT * FROM packages 
+                WHERE title LIKE :query 
+                OR description LIKE :query";
         $this->db->query($sql);
         $this->db->bind(':query', '%' . $query . '%');
         return $this->db->resultSet();

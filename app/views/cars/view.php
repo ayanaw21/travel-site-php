@@ -6,7 +6,8 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="car-gallery">
-                    <img src="<?php echo URLROOT . '/img/cars/' . $data['car']->image; ?>" alt="<?php echo $data['car']->model; ?>" class="main-image">
+                    <img src="<?php echo URLROOT . '/img/cars/' . $data['car']->image; ?>"
+                        alt="<?php echo $data['car']->model; ?>" class="main-image">
                 </div>
                 <div class="car-info mt-4">
                     <h1><?php echo $data['car']->model; ?></h1>
@@ -14,7 +15,7 @@
                         <span class="type"><?php echo ucfirst($data['car']->type); ?></span>
                         <span class="rating">
                             <?php for($i = 0; $i < $data['car']->rating; $i++): ?>
-                                <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
                             <?php endfor; ?>
                         </span>
                     </div>
@@ -48,15 +49,20 @@
                         <span class="price">$<?php echo $data['car']->price_per_day; ?></span>
                         <span class="per-day">per day</span>
                     </div>
-                    <form action="<?php echo URLROOT; ?>/cars/book/<?php echo $data['car']->id; ?>" method="POST" class="booking-form">
+                    <form action="<?php echo URLROOT; ?>/cars/book/<?php echo $data['car']->id; ?>" method="POST"
+                        class="booking-form">
                         <div class="form-group">
                             <label for="start_date">Start Date</label>
-                            <input type="date" name="start_date" id="start_date" class="form-control <?php echo (!empty($data['start_date_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['start_date']; ?>">
+                            <input type="date" name="start_date" id="start_date"
+                                class="form-control <?php echo (!empty($data['start_date_err'])) ? 'is-invalid' : ''; ?>"
+                                value="<?php echo $data['start_date']; ?>">
                             <span class="invalid-feedback"><?php echo $data['start_date_err']; ?></span>
                         </div>
                         <div class="form-group">
                             <label for="end_date">End Date</label>
-                            <input type="date" name="end_date" id="end_date" class="form-control <?php echo (!empty($data['end_date_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $data['end_date']; ?>">
+                            <input type="date" name="end_date" id="end_date"
+                                class="form-control <?php echo (!empty($data['end_date_err'])) ? 'is-invalid' : ''; ?>"
+                                value="<?php echo $data['end_date']; ?>">
                             <span class="invalid-feedback"><?php echo $data['end_date_err']; ?></span>
                         </div>
                         <button type="submit" class="btn btn-primary btn-block">Book Now</button>
@@ -71,19 +77,19 @@
 document.addEventListener('DOMContentLoaded', function() {
     const startDate = document.getElementById('start_date');
     const endDate = document.getElementById('end_date');
-    
+
     // Set minimum date to today
     const today = new Date().toISOString().split('T')[0];
     startDate.min = today;
-    
+
     // Update end date minimum when start date changes
     startDate.addEventListener('change', function() {
         endDate.min = this.value;
-        if(endDate.value && endDate.value < this.value) {
+        if (endDate.value && endDate.value < this.value) {
             endDate.value = this.value;
         }
     });
 });
 </script>
 
-<?php require APPROOT . '/views/inc/footer.php'; ?> 
+<?php require APPROOT . '/views/inc/footer.php'; ?>

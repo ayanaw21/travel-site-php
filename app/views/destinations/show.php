@@ -1,7 +1,6 @@
 <?php
-require_once __DIR__ . '/includes/auth_functions.php';
-startSecureSession();
-require_once __DIR__ . '/connect.php';
+// require_once 'includes/auth_functions.php';
+// startSecureSession();
 
 if (!isset($_GET['id'])) {
     header("Location: packages.php");
@@ -42,7 +41,8 @@ LIMIT 3
 ");
 $stmt->execute(['%' . $destination['location'] . '%']);
 $hotels = $stmt->fetchAll();
-require_once __DIR__ . '/includes/header.php';
+
+require APPROOT . '/views/inc/header.php';
 ?>
 
 <!DOCTYPE html>
@@ -55,7 +55,8 @@ require_once __DIR__ . '/includes/header.php';
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="styles/header.css">
     <link rel="stylesheet" href="styles/footer.css">
-    <link rel="stylesheet" href="styles/destination.css">
+    <link rel="stylesheet" href="/styles/destination.css">
+
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&family=Sono&display=swap"
@@ -68,7 +69,8 @@ require_once __DIR__ . '/includes/header.php';
 
 
     <!-- Destination Hero Section -->
-    <section class="destination-hero" style="background-image: url('<?php echo $destination['image_path']; ?>');">
+    <section class="destination-hero"
+        style="background-image: url('<?php echo URLROOT . '/' . $destination['image_path']; ?>');">
         <div class="hero-overlay">
             <h1><?php echo $destination['name']; ?></h1>
             <p><?php echo $destination['location']; ?></p>
@@ -77,7 +79,7 @@ require_once __DIR__ . '/includes/header.php';
 
     <!-- Destination Content -->
     <section class="destination-content">
-        <div class="">
+        <div class="container">
             <div class="destination-about">
                 <h2>About <?php echo $destination['name']; ?></h2>
                 <p><?php echo $destination['description']; ?></p>
@@ -110,7 +112,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="gallery-grid">
                     <?php foreach ($destination_images as $image): ?>
                     <div class="gallery-item">
-                        <img src="<?php echo htmlspecialchars($image['image_path']); ?>"
+                        <img src="<?php echo URLROOT . '/' . htmlspecialchars($image['image_path']); ?>"
                             alt="<?php echo !empty($image['caption']) ? htmlspecialchars($image['caption']) : 'Destination image'; ?>"
                             class="gallery-image">
                         <?php if (!empty($image['caption'])): ?>
@@ -136,7 +138,8 @@ require_once __DIR__ . '/includes/header.php';
             <div class="packages-grid">
                 <?php foreach ($packages as $package): ?>
                 <div class="package-card">
-                    <img src="<?php echo $package['image_path']; ?>" alt="<?php echo $package['title']; ?>">
+                    <img src="<?php echo URLROOT . '/' . $package['image_path']; ?>"
+                        alt="<?php echo $package['title']; ?>">
                     <div class="package-info">
                         <h3><?php echo $package['title']; ?></h3>
                         <div class="package-meta">
@@ -146,7 +149,8 @@ require_once __DIR__ . '/includes/header.php';
                         <p><?php echo substr($package['description'], 0, 100) . '...'; ?></p>
                         <div class="package-footer">
                             <span class="price">$<?php echo number_format($package['price'], 2); ?></span>
-                            <a href="package.php?id=<?php echo $package['id']; ?>" class="btn-details">Details</a>
+                            <a href="<?php echo URLROOT; ?>/packages/show/<?php echo $package['id']; ?>"
+                                class="btn-details">Details</a>
                         </div>
                     </div>
                 </div>
@@ -166,7 +170,7 @@ require_once __DIR__ . '/includes/header.php';
             <div class="hotels-grid">
                 <?php foreach ($hotels as $hotel): ?>
                 <div class="hotel-card">
-                    <img src="<?php echo $hotel['image_path']; ?>" alt="<?php echo $hotel['name']; ?>">
+                    <img src="<?php echo URLROOT . '/' . $hotel['image_path']; ?>" alt="<?php echo $hotel['name']; ?>">
                     <div class="hotel-info">
                         <h3><?php echo $hotel['name']; ?></h3>
                         <div class="hotel-rating">
@@ -178,7 +182,8 @@ require_once __DIR__ . '/includes/header.php';
                         <div class="hotel-footer">
                             <span class="price">From
                                 $<?php echo number_format($hotel['price_per_night'], 2); ?>/night</span>
-                            <a href="hotel.php?id=<?php echo $hotel['id']; ?>" class="btn-details">View</a>
+                            <a href="<?php echo URLROOT; ?>/hotels/show/<?php echo $hotel['id']; ?>"
+                                class="btn-details">View</a>
                         </div>
                     </div>
                 </div>
@@ -189,7 +194,7 @@ require_once __DIR__ . '/includes/header.php';
     <?php endif; ?>
 
     <!-- Footer -->
-    <?php include 'footer.php'; ?>
+    <?php include APPROOT . '/views/inc/footer.php'; ?>
 </body>
 
 </html>

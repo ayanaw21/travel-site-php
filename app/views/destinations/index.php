@@ -2,18 +2,19 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $data['title']; ?> - Travel Habesha</title>
-    <link rel="stylesheet" href="<?php echo URLROOT; ?>/styles/base.css">
-    <link rel="stylesheet" href="<?php echo URLROOT; ?>/styles/header.css">
-    <link rel="stylesheet" href="<?php echo URLROOT; ?>/styles/footer.css">
-    <link rel="stylesheet" href="<?php echo URLROOT; ?>/styles/destinations.css">
+
+    <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/pages/destinations.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&family=Sono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&family=Sono&display=swap"
+        rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
+
 <body>
     <?php require_once APPROOT . '/views/inc/header.php'; ?>
 
@@ -40,7 +41,8 @@
                 <?php foreach ($data['destinations'] as $destination): ?>
                 <div class="destination-card" data-category="<?php echo $destination->category; ?>">
                     <div class="destination-image">
-                        <img src="<?php echo URLROOT . '/' . $destination->image; ?>" alt="<?php echo $destination->name; ?>">
+                        <img src="<?php echo URLROOT . '/' . $destination->image; ?>"
+                            alt="<?php echo $destination->name; ?>">
                     </div>
                     <div class="destination-info">
                         <h3><?php echo $destination->name; ?></h3>
@@ -51,7 +53,8 @@
                         <p class="description"><?php echo substr($destination->description, 0, 100) . '...'; ?></p>
                         <div class="destination-footer">
                             <span class="category"><?php echo ucfirst($destination->category); ?></span>
-                            <a href="<?php echo URLROOT; ?>/destinations/show/<?php echo $destination->id; ?>" class="btn-explore">Explore</a>
+                            <a href="<?php echo URLROOT; ?>/destinations/show/<?php echo $destination->id; ?>"
+                                class="btn-explore">Explore</a>
                         </div>
                     </div>
                 </div>
@@ -77,7 +80,8 @@
                 const filter = button.getAttribute('data-filter');
 
                 destinationCards.forEach(card => {
-                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                    if (filter === 'all' || card.getAttribute('data-category') ===
+                        filter) {
                         card.style.display = 'block';
                     } else {
                         card.style.display = 'none';
@@ -88,4 +92,5 @@
     });
     </script>
 </body>
-</html> 
+
+</html>

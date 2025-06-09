@@ -2,18 +2,20 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $data['title']; ?> - Travel Habesha</title>
-    <link rel="stylesheet" href="<?php echo URLROOT; ?>/styles/base.css">
-    <link rel="stylesheet" href="<?php echo URLROOT; ?>/styles/header.css">
-    <link rel="stylesheet" href="<?php echo URLROOT; ?>/styles/footer.css">
-    <link rel="stylesheet" href="<?php echo URLROOT; ?>/styles/hotels.css">
+
+    <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/pages/hotel.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&family=Sono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&family=Sono&display=swap"
+        rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
+
 <body>
     <?php require_once APPROOT . '/views/inc/header.php'; ?>
 
@@ -21,9 +23,10 @@
         <div class="hotel-details">
             <h1><?php echo $data['hotel']->name; ?></h1>
             <p class="location"><?php echo $data['hotel']->location; ?></p>
-            
+
             <div class="hotel-image">
-                <img src="<?php echo URLROOT . '/' . $data['hotel']->image; ?>" alt="<?php echo $data['hotel']->name; ?>">
+                <img src="<?php echo URLROOT . '/' . $data['hotel']->image; ?>"
+                    alt="<?php echo $data['hotel']->name; ?>">
             </div>
 
             <div class="hotel-info">
@@ -47,7 +50,7 @@
                 <div class="booking">
                     <h2>Book Your Stay</h2>
                     <p class="price">$<?php echo number_format($data['hotel']->price_per_night, 2); ?> per night</p>
-                    
+
                     <form method="POST" action="<?php echo URLROOT; ?>/hotels/book/<?php echo $data['hotel']->id; ?>">
                         <div class="form-group">
                             <label for="check-in">Check-in</label>
@@ -78,4 +81,5 @@
 
     <?php require_once APPROOT . '/views/inc/footer.php'; ?>
 </body>
+
 </html>
