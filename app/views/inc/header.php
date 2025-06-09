@@ -2,28 +2,27 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-require_once __DIR__ . '/auth_functions.php';
-require_once __DIR__ . '/../connect.php';
+require_once APPROOT . '/helpers/session_helper.php';
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Travel Habesha</title>
-    <link rel="stylesheet" href="styles/base.css">
-    <link rel="stylesheet" href="styles/header.css">
-    <link rel="stylesheet" href="styles/footer.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="<?php echo URLROOT; ?>/styles/base.css">
+    <link rel="stylesheet" href="<?php echo URLROOT; ?>/styles/header.css">
+    <link rel="stylesheet" href="<?php echo URLROOT; ?>/styles/footer.css">
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Sono:wght@400;500&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Sono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Animations -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
-
 <body>
     <header class="site-header">
         <!-- Top Bar -->
@@ -40,8 +39,7 @@ require_once __DIR__ . '/../connect.php';
                         </div>
                         <div class="contact-info">
                             <a href="tel:+251912345678"><i class="fas fa-phone"></i> +251 91 234 5678</a>
-                            <a href="mailto:info@travelhabesha.com"><i class="fas fa-envelope"></i>
-                                info@travelhabesha.com</a>
+                            <a href="mailto:info@travelhabesha.com"><i class="fas fa-envelope"></i> info@travelhabesha.com</a>
                         </div>
                     </div>
                     <div class="top-bar-right">
@@ -52,24 +50,24 @@ require_once __DIR__ . '/../connect.php';
                             <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
                         </div>
                         <?php if (isLoggedIn()): ?>
-                        <div class="user-menu-dropdown">
-                            <div class="user-avatar">
-                                <img src="<?php echo getUserAvatar($_SESSION['user_id']); ?>" alt="User Avatar">
+                            <div class="user-menu-dropdown">
+                                <div class="user-avatar">
+                                    <img src="<?php echo URLROOT . '/' . getUserAvatar($_SESSION['user_id']); ?>" alt="User Avatar">
+                                </div>
+                                <ul class="user-dropdown-menu">
+                                    <li><a href="<?php echo URLROOT; ?>/users/profile"><i class="fas fa-user"></i> My Profile</a></li>
+                                    <li><a href="<?php echo URLROOT; ?>/bookings"><i class="fas fa-calendar-check"></i> My Bookings</a></li>
+                                    <?php if (isAdmin()): ?>
+                                        <li><a href="<?php echo URLROOT; ?>/admin/dashboard"><i class="fas fa-cog"></i> Admin Panel</a></li>
+                                    <?php endif; ?>
+                                    <li><a href="<?php echo URLROOT; ?>/users/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                                </ul>
                             </div>
-                            <ul class="user-dropdown-menu">
-                                <li><a href="profile.php"><i class="fas fa-user"></i> My Profile</a></li>
-                                <li><a href="bookings.php"><i class="fas fa-calendar-check"></i> My Bookings</a></li>
-                                <?php if (isAdmin()): ?>
-                                <li><a href="admin/dashboard.php"><i class="fas fa-cog"></i> Admin Panel</a></li>
-                                <?php endif; ?>
-                                <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                            </ul>
-                        </div>
                         <?php else: ?>
-                        <div class="auth-links">
-                            <a href="login.php" class="btn-login"><i class="fas fa-sign-in-alt"></i> Login</a>
-                            <a href="register.php" class="btn-register"><i class="fas fa-user-plus"></i> Register</a>
-                        </div>
+                            <div class="auth-links">
+                                <a href="<?php echo URLROOT; ?>/users/login" class="btn-login"><i class="fas fa-sign-in-alt"></i> Login</a>
+                                <a href="<?php echo URLROOT; ?>/users/register" class="btn-register"><i class="fas fa-user-plus"></i> Register</a>
+                            </div>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -80,7 +78,7 @@ require_once __DIR__ . '/../connect.php';
         <nav class="main-navigation">
             <div class="container">
                 <div class="navbar">
-                    <a href="index.php" class="logo">
+                    <a href="<?php echo URLROOT; ?>" class="logo">
                         <span class="logo-text">Travel<span class="logo-highlight">Habesha</span></span>
                         <span class="logo-tagline">Discover Ethiopia</span>
                     </a>
@@ -92,28 +90,31 @@ require_once __DIR__ . '/../connect.php';
                     </button>
 
                     <ul class="nav-menu">
-                        <li class="nav-item"><a href="index.php" class="nav-link">Home</a></li>
+                        <li class="nav-item"><a href="<?php echo URLROOT; ?>/pages/index" class="nav-link">Home</a></li>
                         <li class="nav-item dropdown">
-                            <a href="packages.php" class="nav-link">Packages <i class="fas fa-chevron-down"></i></a>
+                            <a href="<?php echo URLROOT; ?>/packages" class="nav-link">Packages <i class="fas fa-chevron-down"></i></a>
                             <ul class="dropdown-menu">
-                                <li><a href="packages.php?type=adventure"><i class="fas fa-mountain"></i> Adventure Tours</a></li>
-                                <li><a href="packages.php?type=cultural"><i class="fas fa-landmark"></i> Cultural Tours</a></li>
-                                <li><a href="packages.php?type=wildlife"><i class="fas fa-paw"></i> Wildlife Safaris</a></li>
-                                <li><a href="packages.php?type=religious"><i class="fas fa-pray"></i> Religious Tours</a></li>
+                                <li><a href="<?php echo URLROOT; ?>/packages/index?type=adventure"><i class="fas fa-mountain"></i> Adventure Tours</a></li>
+                                <li><a href="<?php echo URLROOT; ?>/packages/index?type=cultural"><i class="fas fa-landmark"></i> Cultural Tours</a></li>
+                                <li><a href="<?php echo URLROOT; ?>/packages/index?type=wildlife"><i class="fas fa-paw"></i> Wildlife Safaris</a></li>
+                                <li><a href="<?php echo URLROOT; ?>/packages/index?type=religious"><i class="fas fa-pray"></i> Religious Tours</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a href="hotels.php" class="nav-link">Hotels</a></li>
-                        <li class="nav-item"><a href="rentalcar.php" class="nav-link">Car Rental</a></li>
-                        <li class="nav-item"><a href="destination.php" class="nav-link">Destinations</a></li>
-                        <li class="nav-item"><a href="about.php" class="nav-link">About Us</a></li>
-                        <li class="nav-item"><a href="contact.php" class="nav-link">Contact</a></li>
-                        <li class="nav-item book-now"><a href="book.php" class="btn-primary">Book Now</a></li>
+                        <li class="nav-item"><a href="<?php echo URLROOT; ?>/hotels/index" class="nav-link">Hotels</a></li>
+                        <li class="nav-item"><a href="<?php echo URLROOT; ?>/cars/index" class="nav-link">Car Rental</a></li>
+                        <li class="nav-item"><a href="<?php echo URLROOT; ?>/destinations/index" class="nav-link">Destinations</a></li>
+                        <li class="nav-item"><a href="<?php echo URLROOT; ?>/pages/about" class="nav-link">About Us</a></li>
+                        <li class="nav-item"><a href="<?php echo URLROOT; ?>/pages/contact" class="nav-link">Contact</a></li>
+                        <li class="nav-item book-now"><a href="<?php echo URLROOT; ?>/bookings/create" class="btn-primary">Book Now</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
 
+    <?php flash(); ?>
+
+    <main>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Mobile Menu Toggle
@@ -177,7 +178,4 @@ require_once __DIR__ . '/../connect.php';
             }
         });
     });
-    </script>
-</body>
-
-</html>
+    </script> 

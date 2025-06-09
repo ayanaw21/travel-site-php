@@ -1,70 +1,92 @@
 <?php
-// includes/auth_functions.php
-
+// Start a secure session
 function startSecureSession() {
     if (session_status() === PHP_SESSION_NONE) {
-        // Secure session settings
+        // Set secure session parameters
         ini_set('session.cookie_httponly', 1);
-        ini_set('session.cookie_secure', 1); // Enable if using HTTPS
-        ini_set('session.use_strict_mode', 1);
+        ini_set('session.use_only_cookies', 1);
+        ini_set('session.cookie_secure', 1);
         
         session_start();
-        
-        // Regenerate ID to prevent session fixation
-        if (empty($_SESSION['created'])) {
-            session_regenerate_id(true);
-            $_SESSION['created'] = time();
-        } else if (time() - $_SESSION['created'] > 1800) {
-            // Regenerate every 30 minutes
-            session_regenerate_id(true);
-            $_SESSION['created'] = time();
-        }
     }
 }
 
+// Clean user input
+function cleanInput($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
+// Check if user is logged in
 function isLoggedIn() {
     return isset($_SESSION['user_id']);
 }
 
+// Check if user is admin
 function isAdmin() {
-    return isLoggedIn() && !empty($_SESSION['is_admin']);
+    return isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true;
 }
 
-function requireLogin($redirect = 'login.php') {
-    startSecureSession();
-    if (!isLoggedIn()) {
-        $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI'];
-        header("Location: $redirect");
-        exit();
-    }
-}
-
-function requireAdmin($redirect = 'index.php') {
-    requireLogin();
+// Require admin access
+function requireAdmin() {
     if (!isAdmin()) {
-        header("Location: $redirect");
+        header('Location: /travel-site/login.php');
         exit();
     }
 }
 
-function logoutUser() {
-    startSecureSession();
-    $_SESSION = array();
+// Get user avatar
+function getUserAvatar($userId) {
+    // Default avatar path
+    $defaultAvatar = 'assets/images/default-avatar.png';
     
-    // Delete session cookie
-    if (ini_get("session.use_cookies")) {
-        $params = session_get_cookie_params();
-        setcookie(session_name(), '', time() - 42000,
-            $params["path"], $params["domain"],
-            $params["secure"], $params["httponly"]
-        );
+    // Check if user has custom avatar
+    global $pdo;
+    try {
+        $stmt = $pdo->prepare("SELECT avatar_path FROM users WHERE id = ?");
+        $stmt->execute([$userId]);
+        $result = $stmt->fetch();
+        
+        if ($result && $result['avatar_path']) {
+            return $result['avatar_path'];
+        }
+    } catch (PDOException $e) {
+        error_log("Error fetching user avatar: " . $e->getMessage());
     }
     
-    session_destroy();
+    return $defaultAvatar;
 }
 
-function getUserAvatar($userId) {
-    // Default avatar if none set
-    return 'images/default-avatar.jpg';
+// Redirect if not logged in
+function redirectIfNotLoggedIn() {
+    if (!isLoggedIn()) {
+        header('Location: /travel-site/login.php');
+        exit();
+    }
 }
-?>
+
+// Redirect if not admin
+function redirectIfNotAdmin() {
+    if (!isAdmin()) {
+        header('Location: /travel-site/login.php');
+        exit();
+    }
+}
+
+// Generate CSRF token
+function generateCSRFToken() {
+    if (!isset($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf_token'];
+}
+
+// Verify CSRF token
+function verifyCSRFToken($token) {
+    if (!isset($_SESSION['csrf_token']) || $token !== $_SESSION['csrf_token']) {
+        return false;
+    }
+    return true;
+} 

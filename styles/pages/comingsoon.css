@@ -1,0 +1,297 @@
+/* Coming Soon Page Styles */
+
+/* Hero Section */
+.coming-soon-hero {
+    position: relative;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    overflow: hidden;
+}
+
+.coming-soon-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    padding: var(--spacing-xl);
+}
+
+.coming-soon-icon {
+    font-size: var(--font-size-6xl);
+    margin-bottom: var(--spacing-md);
+    color: var(--primary-color);
+    animation: bounce 2s ease infinite;
+}
+
+.coming-soon-title {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--spacing-md);
+    animation: slideInDown 1s ease;
+}
+
+.coming-soon-message {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-xl);
+    animation: slideInUp 1s ease;
+}
+
+/* Countdown Section */
+.countdown-section {
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-xl);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius-lg);
+    backdrop-filter: blur(10px);
+}
+
+.countdown-title {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-lg);
+    color: white;
+}
+
+.countdown-timer {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.countdown-item {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    min-width: 100px;
+    animation: fadeIn 1s ease;
+}
+
+.countdown-number {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-xs);
+}
+
+.countdown-label {
+    font-size: var(--font-size-sm);
+    color: white;
+    text-transform: uppercase;
+}
+
+/* Newsletter Section */
+.newsletter-section {
+    margin-top: var(--spacing-xl);
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.newsletter-title {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-md);
+    color: white;
+}
+
+.newsletter-form {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.newsletter-input {
+    flex: 1;
+    padding: var(--spacing-md);
+    border: none;
+    border-radius: var(--border-radius-md);
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    backdrop-filter: blur(5px);
+}
+
+.newsletter-input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.newsletter-button {
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.newsletter-button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+/* Social Links */
+.social-links {
+    margin-top: var(--spacing-xl);
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+}
+
+.social-link {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: var(--font-size-xl);
+    transition: all var(--transition-fast);
+    backdrop-filter: blur(5px);
+}
+
+.social-link:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-3px) rotate(360deg);
+}
+
+/* Progress Bar */
+.progress-section {
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius-lg);
+    backdrop-filter: blur(10px);
+}
+
+.progress-title {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-md);
+    color: white;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius-sm);
+    overflow: hidden;
+    margin-bottom: var(--spacing-md);
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: var(--primary-color);
+    border-radius: var(--border-radius-sm);
+    transition: width 1s ease;
+    animation: progress 2s ease-in-out infinite;
+}
+
+.progress-status {
+    font-size: var(--font-size-sm);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .coming-soon-icon {
+        font-size: var(--font-size-5xl);
+    }
+    
+    .coming-soon-title {
+        font-size: var(--font-size-3xl);
+    }
+    
+    .coming-soon-message {
+        font-size: var(--font-size-lg);
+    }
+    
+    .countdown-timer {
+        flex-wrap: wrap;
+    }
+    
+    .countdown-item {
+        min-width: 80px;
+    }
+    
+    .countdown-number {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .newsletter-form {
+        flex-direction: column;
+    }
+    
+    .newsletter-button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .coming-soon-icon {
+        font-size: var(--font-size-4xl);
+    }
+    
+    .coming-soon-title {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .coming-soon-message {
+        font-size: var(--font-size-base);
+    }
+    
+    .countdown-item {
+        min-width: 70px;
+        padding: var(--spacing-sm);
+    }
+    
+    .countdown-number {
+        font-size: var(--font-size-xl);
+    }
+    
+    .countdown-label {
+        font-size: var(--font-size-xs);
+    }
+    
+    .social-link {
+        width: 40px;
+        height: 40px;
+        font-size: var(--font-size-lg);
+    }
+}
+
+/* Animations */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes progress {
+    0% {
+        width: 0%;
+    }
+    50% {
+        width: 70%;
+    }
+    100% {
+        width: 0%;
+    }
+} 
