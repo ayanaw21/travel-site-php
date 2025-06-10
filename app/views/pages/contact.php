@@ -1,8 +1,8 @@
 <?php
 require_once APPROOT . '/helpers/session_helper.php';
 
-$name = $email = $message = '';
-$nameErr = $emailErr = $messageErr = '';
+$name = $email = $subject = $message = '';
+$nameErr = $emailErr = $subjectErr = $messageErr = '';
 $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -22,6 +22,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $email = cleanInput($_POST['email']);
     }
     
+    // Validate subject
+    if (empty($_POST['subject'])) {
+        $subjectErr = 'Subject is required';
+    } else {
+        $subject = cleanInput($_POST['subject']);
+    }
+    
     // Validate message
     if (empty($_POST['message'])) {
         $messageErr = 'Message is required';
@@ -30,11 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     
     // If no errors, save to database
-    if (empty($nameErr) && empty($emailErr) && empty($messageErr)) {
+    if (empty($nameErr) && empty($emailErr) && empty($subjectErr) && empty($messageErr)) {
         $contact = new Contact();
-        if($contact->addMessage($name, $email, $message)) {
+        if($contact->addMessage($name, $email, $message, $subject)) {
             $success = 'Thank you for your message! We will get back to you soon.';
-            $name = $email = $message = ''; // Clear form
+            $name = $email = $subject = $message = ''; // Clear form
         } else {
             $error = 'Failed to send message. Please try again later.';
         }
@@ -118,13 +125,6 @@ if (isLoggedIn()) {
 
                 <form method="POST" action="<?php echo URLROOT; ?>/pages/contact">
                     <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <input type="text" id="subject" name="subject" value="<?php echo $subject ?? ''; ?>">
-                        <?php if (!empty($subject_err)): ?>
-                        <span class="error"><?php echo $subject_err; ?></span>
-                        <?php endif; ?>
-                    </div>
-                    <div class="form-group">
                         <label for="name">Your Name</label>
                         <input type="text" id="name" name="name" value="<?php echo $name; ?>" required>
                         <?php if ($nameErr): ?>
@@ -137,6 +137,14 @@ if (isLoggedIn()) {
                         <input type="email" id="email" name="email" value="<?php echo $email; ?>" required>
                         <?php if ($emailErr): ?>
                         <span class="error"><?php echo $emailErr; ?></span>
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" value="<?php echo $subject; ?>" required>
+                        <?php if ($subjectErr): ?>
+                        <span class="error"><?php echo $subjectErr; ?></span>
                         <?php endif; ?>
                     </div>
 
