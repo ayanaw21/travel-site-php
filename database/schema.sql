@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS destinations (
     features TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+drop table destinations
 
 -- Destination Gallery table
 CREATE TABLE IF NOT EXISTS destination_gallery (
@@ -66,6 +67,7 @@ CREATE TABLE IF NOT EXISTS destination_reviews (
 );
 
 -- Hotels table
+drop table hotels 
 CREATE TABLE IF NOT EXISTS hotels (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name VARCHAR(100) NOT NULL,
@@ -95,6 +97,8 @@ CREATE TABLE IF NOT EXISTS cars (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+drop 
+
 -- Bookings table
 CREATE TABLE IF NOT EXISTS bookings (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -108,7 +112,7 @@ CREATE TABLE IF NOT EXISTS bookings (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
-
+select * from bookings
 -- Reviews table
 CREATE TABLE IF NOT EXISTS reviews (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -133,4 +137,15 @@ CREATE TABLE IF NOT EXISTS packages (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+drop tables packages
+
 select * from users;
+
+CREATE TABLE contacts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    subject VARCHAR(255),
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

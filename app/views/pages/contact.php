@@ -43,10 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 // If user is logged in, pre-fill name and email
 if (isLoggedIn()) {
-    $user = new User();
-    $userData = $user->getUserById($_SESSION['user_id']);
+    $userModel = new User();
+    $userData = $userModel->getUserById($_SESSION['user_id']);
+    
     if ($userData) {
-        $name = $userData->full_name;
+        $name = $userData->full_name ?? $userData->name; // Use whichever field exists
         $email = $userData->email;
     }
 }
@@ -116,6 +117,13 @@ if (isLoggedIn()) {
                 <?php endif; ?>
 
                 <form method="POST" action="<?php echo URLROOT; ?>/pages/contact">
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" value="<?php echo $subject ?? ''; ?>">
+                        <?php if (!empty($subject_err)): ?>
+                        <span class="error"><?php echo $subject_err; ?></span>
+                        <?php endif; ?>
+                    </div>
                     <div class="form-group">
                         <label for="name">Your Name</label>
                         <input type="text" id="name" name="name" value="<?php echo $name; ?>" required>

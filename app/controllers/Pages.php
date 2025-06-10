@@ -28,21 +28,39 @@ class Pages extends Controller {
     }
 
     public function contact() {
+         $userData = null;
+          $contactModel = $this->model('Contact');
+    $userModel = $this->model('User');
+    
+    $data = [
+        'title' => 'Contact Us',
+        'name' => '',
+        'email' => '',
+        'subject' => '',
+        'message' => '',
+        'name_err' => '',
+        'email_err' => '',
+        'subject_err' => '',
+        'message_err' => ''
+    ];
+    
+    // If user is logged in, get their data
+        if(isLoggedIn()) {
+        $userData = $userModel->getUserById($_SESSION['user_id']);
+        if($userData) {
+            $data['name'] = $userData->full_name ?? $userData->name;
+            $data['email'] = $userData->email;
+        }
+    }
+
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Process form
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-            $data = [
-                'title' => 'Contact Us',
-                'name' => trim($_POST['name']),
-                'email' => trim($_POST['email']),
-                'subject' => trim($_POST['subject']),
-                'message' => trim($_POST['message']),
-                'name_err' => '',
-                'email_err' => '',
-                'subject_err' => '',
-                'message_err' => ''
-            ];
+            $data['name'] = trim($_POST['name'] ?? '');
+            $data['email'] = trim($_POST['email'] ?? '');
+            $data['subject'] = trim($_POST['subject'] ?? '');
+            $data['message'] = trim($_POST['message'] ?? '');
 
             // Validate name
             if(empty($data['name'])) {
@@ -67,41 +85,24 @@ class Pages extends Controller {
             }
 
             // Make sure no errors
-            if(empty($data['name_err']) && empty($data['email_err']) && 
-               empty($data['subject_err']) && empty($data['message_err'])) {
-                // Send email
-                $to = 'contact@travelhabesha.com';
-                $subject = 'Contact Form: ' . $data['subject'];
-                $message = "Name: " . $data['name'] . "\n";
-                $message .= "Email: " . $data['email'] . "\n\n";
-                $message .= "Message:\n" . $data['message'];
-                $headers = 'From: ' . $data['email'];
-
-                if(mail($to, $subject, $message, $headers)) {
-                    flash('contact_success', 'Your message has been sent successfully');
-                    redirect('pages/contact');
-                } else {
-                    die('Something went wrong');
-                }
+          if(empty($data['name_err']) && empty($data['email_err']) && empty($data['message_err'])) {
+            if($contactModel->addMessage(
+                $data['name'],
+                $data['email'],
+                $data['message'],
+                $data['subject']
+            )) {
+                flash('contact_success', 'Your message has been sent successfully!');
+                redirect('pages/contact');
             } else {
+                die('Something went wrong');
+            }
+        }
+    }
                 // Load view with errors
                 $this->view('pages/contact', $data);
-            }
-        } else {
-            $data = [
-                'title' => 'Contact Us',
-                'name' => '',
-                'email' => '',
-                'subject' => '',
-                'message' => '',
-                'name_err' => '',
-                'email_err' => '',
-                'subject_err' => '',
-                'message_err' => ''
-            ];
-
-            $this->view('pages/contact', $data);
-        }
+            
+       
     }
 
     public function destination() {

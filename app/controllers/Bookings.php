@@ -34,58 +34,49 @@ class Bookings extends Controller {
     }
 
     public function create() {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Process form
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            
-            $data = [
-                'user_id' => $_SESSION['user_id'],
-                'package_id' => $_POST['package_id'] ?? null,
-                'hotel_id' => $_POST['hotel_id'] ?? null,
-                'car_id' => $_POST['car_id'] ?? null,
-                'start_date' => $_POST['start_date'],
-                'end_date' => $_POST['end_date'],
-                'total_price' => $_POST['total_price'],
-                'start_date_err' => '',
-                'end_date_err' => '',
-                'total_price_err' => ''
-            ];
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Sanitize POST data
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        
+        $data = [
+            'user_id' => $_SESSION['user_id'],
+            'booking_type' => trim($_POST['booking_type']),
+            'item_id' => trim($_POST['item_id']),
+            'start_date' => trim($_POST['start_date']),
+            'end_date' => trim($_POST['end_date']),
+            'total_price' => calculateTotalPrice(), // Implement this function
+            'start_date_err' => '',
+            'end_date_err' => ''
+        ];
 
-            // Validate dates
-            if (empty($data['start_date'])) {
-                $data['start_date_err'] = 'Please enter start date';
-            }
-            if (empty($data['end_date'])) {
-                $data['end_date_err'] = 'Please enter end date';
-            }
-            if ($data['start_date'] >= $data['end_date']) {
-                $data['end_date_err'] = 'End date must be after start date';
-            }
+        // Validate data
+        if (empty($data['start_date'])) {
+            $data['start_date_err'] = 'Please enter start date';
+        }
+        // Add other validations...
 
-            // Make sure no errors
-            if (empty($data['start_date_err']) && empty($data['end_date_err'])) {
-                if ($this->bookingModel->createBooking($data)) {
-                    flash('booking_message', 'Booking Created');
-                    redirect('bookings');
-                } else {
-                    die('Something went wrong');
-                }
+        if (empty($data['start_date_err']) && empty($data['end_date_err'])) {
+            if ($this->bookingModel->createBooking($data)) {
+                flash('booking_message', 'Booking Created');
+                redirect('bookings');
             } else {
-                $this->view('bookings/create', $data);
+                die('Something went wrong');
             }
         } else {
-            $data = [
-                'user_id' => $_SESSION['user_id'],
-                'package_id' => '',
-                'hotel_id' => '',
-                'car_id' => '',
-                'start_date' => '',
-                'end_date' => '',
-                'total_price' => ''
-            ];
             $this->view('bookings/create', $data);
         }
+    } else {
+        // Load form with default values
+        $data = [
+            'booking_type' => '',
+            'item_id' => '',
+            'start_date' => '',
+            'end_date' => '',
+            'total_price' => ''
+        ];
+        $this->view('bookings/create', $data);
     }
+}
 
     public function cancel($id) {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {

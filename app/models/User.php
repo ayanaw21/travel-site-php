@@ -139,6 +139,14 @@ class User extends Model {
     public function getTotalUsers() {
         return $this->count();
     }
+     public function getUserById($id) {
+        $this->db->query('SELECT * FROM users WHERE id = :id');
+        $this->db->bind(':id', $id);
+        
+        $row = $this->db->single();
+        
+        return $row;
+    }
 
     // Check if users table exists and has correct structure
     public function checkTableStructure() {

@@ -41,8 +41,14 @@
                 <?php foreach ($data['destinations'] as $destination): ?>
                 <div class="destination-card" data-category="<?php echo $destination->category; ?>">
                     <div class="destination-image">
-                        <img src="<?php echo URLROOT . '/' . $destination->image; ?>"
-                            alt="<?php echo $destination->name; ?>">
+                        <img src="<?php
+                            if (str_starts_with($destination->image, 'http://') || str_starts_with($destination->image, 'https://')) {
+                                echo $destination->image;
+                            } else {
+                                echo URLROOT . '/' . $destination->image;
+                            }
+                            ?>" alt="<?php echo htmlspecialchars($destination->name); ?>"
+                            onerror="this.onerror=null; this.src='<?php echo URLROOT; ?>public/assets/a2.jpeg';">
                     </div>
                     <div class="destination-info">
                         <h3><?php echo $destination->name; ?></h3>

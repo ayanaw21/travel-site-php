@@ -5,7 +5,20 @@ class Booking extends Model {
     public function __construct() {
         parent::__construct();
     }
-
+    public function createBooking($data) {
+    $this->db->query('INSERT INTO bookings 
+        (user_id, booking_type, item_id, start_date, end_date, total_price) 
+        VALUES (:user_id, :booking_type, :item_id, :start_date, :end_date, :total_price)');
+    
+    $this->db->bind(':user_id', $data['user_id']);
+    $this->db->bind(':booking_type', $data['booking_type']);
+    $this->db->bind(':item_id', $data['item_id']);
+    $this->db->bind(':start_date', $data['start_date']);
+    $this->db->bind(':end_date', $data['end_date']);
+    $this->db->bind(':total_price', $data['total_price']);
+    
+    return $this->db->execute();
+}
     public function getBookingsByUser($user_id) {
         $sql = "SELECT b.*, p.title as package_title, p.image_path as package_image, d.name as destination_name
                 FROM bookings b
